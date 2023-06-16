@@ -6,6 +6,7 @@ def parse_string(string):
 
     return substring_1, substring_2, substring_3[:-1]
 
+
 def parse_sub_string(string, index):
     sub_string = ""
     open_brackets = 0
@@ -19,5 +20,3 @@ def parse_sub_string(string, index):
             break
         sub_string += char
     return sub_string, index
-
-# parse_string("node1(node2,node3,node4)")

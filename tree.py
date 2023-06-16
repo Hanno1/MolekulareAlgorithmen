@@ -1,4 +1,5 @@
 from tree_parser import parse_string
+import CustomExceptions
 
 
 class Node:
@@ -9,12 +10,13 @@ class Node:
 
     def add_children(self, children):
         if len(children) != 3:
-            raise ValueError
+            raise CustomExceptions.WrongNumberChildren(len(children), self.name)
         self.children = children
         for child in children:
             child.parent = self
 
-class TrinärerBaum:
+
+class TriTree:
     def __init__(self, root, initial_value=None):
         self.names = []
         if initial_value:
@@ -26,7 +28,7 @@ class TrinärerBaum:
         
     def _initialize_with_string_rek(self, string):
         if "(" in string:
-            split_string = string.split("(",1)
+            split_string = string.split("(", 1)
             node = Node(split_string[0])
             self.names.append(node.name)
 
@@ -46,10 +48,10 @@ class TrinärerBaum:
     def add_node(self, node_name, children):
         node = self.search_node(node_name)
         if not node or node.children:
-            raise ValueError
+            raise CustomExceptions.InvalidNode(node)
         for child in children:
             if child in self.names:
-                raise ValueError
+                raise CustomExceptions.DuplicateName(child)
         c = []
         for child in children:
             c.append(Node(child))
@@ -88,13 +90,14 @@ class TrinärerBaum:
             return_string = return_string[:-1]
             return_string += ")"
         return return_string
-    
+
+
 node1 = Node("node1")
 node2 = Node("node2")
 node3 = Node("node3")
 node4 = Node("node4")
 
-tree =  TrinärerBaum(node1)
+tree = TriTree(node1)
 tree.add_node("node1", ["node2", "node3", "node4"])
 tree.add_node("node3", ["node5", "node6", "node7"])
 
