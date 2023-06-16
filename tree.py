@@ -1,4 +1,4 @@
-from tree_parser import parse_string
+from tree_parser import get_subtree_strings
 import CustomExceptions
 
 
@@ -32,7 +32,7 @@ class TriTree:
             node = Node(split_string[0])
             self.names.append(node.name)
 
-            s1, s2, s3 = parse_string(split_string[1])
+            s1, s2, s3 = get_subtree_strings(split_string[1])
             
             n1 = self._initialize_with_string_rek(s1)
             n2 = self._initialize_with_string_rek(s2)
@@ -78,7 +78,7 @@ class TriTree:
                     return child
         return None
 
-    def print_tree(self):
+    def get_tree_string(self):
         return self._print_tree_rek(self.root)
 
     def _print_tree_rek(self, node):
