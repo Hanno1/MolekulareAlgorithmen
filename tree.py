@@ -92,12 +92,7 @@ class TriTree:
         return return_string
 
 
-node1 = Node("node1")
-node2 = Node("node2")
-node3 = Node("node3")
-node4 = Node("node4")
-
-tree = TriTree(node1)
+tree = TriTree(Node("node1"))
 tree.add_node("node1", ["node2", "node3", "node4"])
 tree.add_node("node3", ["node5", "node6", "node7"])
 

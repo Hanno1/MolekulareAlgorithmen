@@ -14,8 +14,10 @@ class TrivialEncoding(TriTree):
     def __init__(self, root, initial_value=None, dna_value=None):
         if initial_value:
             super().__init__(root, initial_value)
-        else:
-            pass
+        elif dna_value:
+            self.decode_tree(dna_value)
+        elif root:
+            super().__init__(root)
 
     def encode_tree(self):
         terminal_counter = len(self.names) + 1
