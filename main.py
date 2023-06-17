@@ -1,9 +1,9 @@
-from encodings.tree import TriTree
-from encodings.tree import Node
-from encodings.specialEncodings.logarithmicEncoding import LogarithmicEncoding
-from encodings.specialEncodings.bracketEncoding import BracketEncoding
-from encodings.specialEncodings.improvedBracketEncoding import ImprovedBracketEncoding
-from helperFunctions.AlphabetFunctions import translate_from_dna, initialize_alphabet
+from tree import TriTree
+from tree import Node
+from logarithmicEncoding import LogarithmicEncoding
+from bracketEncoding import BracketEncoding
+from improvedBracketEncoding import ImprovedBracketEncoding
+from AlphabetFunctions import translate_from_dna, initialize_alphabet
 
 
 initialize_alphabet(["A", "C", "T", "G"])

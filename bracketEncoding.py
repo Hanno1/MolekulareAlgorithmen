@@ -1,6 +1,6 @@
-from encodings.tree import TriTree
-from helperFunctions import treeParser as Tp
-from helperFunctions.AlphabetFunctions import translate_from_dna, translate_to_dna
+from tree import TriTree
+import treeParser as Tp
+from AlphabetFunctions import translate_from_dna, translate_to_dna
 
 
 class BracketEncoding(TriTree):
