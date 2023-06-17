@@ -3,70 +3,43 @@ import math
 from itertools import product
 import treeParser as Tp
 from tree import Node
-import Constants
-
-
-def generator(length, symbols):
-    # generator for unique words of given length
-    arr = ["".join(i) for i in product(symbols, repeat=length)]
-    for i in range(len(arr)):
-        yield arr[i]
+from Constants import translate_from_dna, translate_to_dna
 
 
 class LogarithmicEncoding(TriTree):
-    def __init__(self, root, initial_value=None, dna_value=None, bracket=None, symbols=Constants.BASE_SYMBOLS,
-                 branching_degree=3):
-        self.mapping = dict()
-        self.symbols = symbols
+    def __init__(self, root, initial_value=None, dna_value=None, branching_degree=3):
         self.branching_degree = branching_degree
+        self.version = "log"
         if initial_value:
             super().__init__(root, initial_value, branching_degree=branching_degree)
-        elif dna_value and bracket:
+        elif dna_value:
             self.names = []
-            self.root = self.tree_from_dna(dna_value, bracket)
+            self.root = self.tree_from_dna(dna_value)
         elif root:
             super().__init__(root)
 
     def tree_to_dna(self):
-        # +1 for bracket terminal
-        terminal_counter = len(self.names) + 1
-        word_length = math.ceil(math.log(terminal_counter, len(self.symbols)))
+        return self._tree_to_dna_rek(self.root)
 
-        g = generator(word_length, self.symbols)
-        # use first encoding as bracket encoding
-        self.mapping["("] = next(g)
-        
-        return self._tree_to_dna_rek(self.root, g)
-
-    def _tree_to_dna_rek(self, node, g):
+    def _tree_to_dna_rek(self, node):
         # append dna-string with node-name
-        self.mapping[node.name] = next(g)
-        return_string = self.mapping[node.name]
+        return_string = translate_to_dna(node.name, self.version)
 
         # check if node has subtree
         if len(node.children) == self.branching_degree:
             # append dna-string with open bracket
-            return_string += self.mapping["("]
+            return_string += translate_to_dna("(", self.version)
             # append dna-string with subtree-string
+            counter = 0
             for child in node.children:
-                ret_string = self._tree_to_dna_rek(child, g)
+                counter += 1
+                ret_string = self._tree_to_dna_rek(child)
                 return_string += ret_string
+                if counter < self.branching_degree:
+                    return_string += translate_to_dna(",", self.version)
         return return_string
 
-    def tree_from_dna(self, string, bracket_code):
-        if len(string) > len(bracket_code):
-            # get root
-            node = Node(string[:len(bracket_code)], self.branching_degree)
-            # get subtrees of root
-            split_string = string[2*len(bracket_code):]
-            arr = Tp.get_substring_logarithmic_encoding(split_string, bracket_code, self.branching_degree)
-            node_list = []
-            for n in arr:
-                node_list.append(self.tree_from_dna(n, bracket_code))
-            # add subtrees to root
-            node.add_children(node_list)
-        else:
-            node = Node(string, self.branching_degree)
-            self.names.append(node.name)
-        return node
+    def tree_from_dna(self, string):
+        normal_string = translate_from_dna(string, self.version)
+        tree_string = Tp.add_closing_brackets_rek(normal_string, self.branching_degree)
 

@@ -29,19 +29,46 @@ def subtree_string(string, index):
     return sub_string, index
 
 
+def add_closing_brackets_rek(string, degree):
+    return_string = ""
+    split_string = string.split("(", 1)
+    if len(split_string) == 1:
+        return string
+    index = 0
+    open_brackets = 0
+    original_index = 0
+    word = ""
+    for char in split_string[1]:
+        index += 1
+        if char == "(":
+            original_index = index
+            open_brackets += 1
+        if char == "," and open_brackets == 0:
+            return_string += word + "(" + add_closing_brackets_rek(string[original_index:index+1], degree) + ")"
+            break
+        else:
+            word += char
+
+
+    print(return_string)
+    """return_string += split_string[0] + "("
+    return_string += add_closing_brackets_rek(split_string[1], degree) + ")"""
+    return return_string
+
+
 # splits dna string into 3 subtree strings
-def get_substring_logarithmic_encoding(string, bracket, degree):
+def get_substring_logarithmic_encoding(arr, degree):
     index = 0
     return_list = []
     for _ in range(degree):
-        substring, index = subtree_string_logarithmic_encoding(string, index, bracket, degree)
+        substring, index = subtree_string_logarithmic_encoding(arr, index, degree)
         if len(substring) == 0:
             break
         return_list.append(substring)
     return return_list
 
 
-def subtree_string_logarithmic_encoding(string, index, bracket, degree):
+def subtree_string_logarithmic_encoding(arr, index, degree):
     head = ""
     sub_string = ""
     open_brackets = 0
@@ -50,14 +77,14 @@ def subtree_string_logarithmic_encoding(string, index, bracket, degree):
     # iterate through string from index
     while True:
         # get next word
-        sequence = string[index:index+len(bracket)]
+        sequence = arr[index:index+len(bracket)]
         index += len(bracket)
 
         # if word is subtree head -> initialize
         if head == "": 
             head = sequence
             # break if subtree is a single node
-            next_node_is_bracket = (string[index:index+len(bracket)] == bracket)
+            next_node_is_bracket = (arr[index:index+len(bracket)] == bracket)
             if not next_node_is_bracket:
                 break
         # else check if subtree-end is found
