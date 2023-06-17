@@ -1,4 +1,4 @@
-from tree_parser import get_subtree_strings
+from treeParser import get_subtree_strings
 import CustomExceptions
 
 
