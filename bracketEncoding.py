@@ -41,5 +41,5 @@ class BracketEncoding(TriTree):
 
     def tree_from_dna(self, string):
         normal_string = translate_from_dna(string, self.version)
-        tree_string =  Tp.add_closing_brackets_rek(normal_string, self.branching_degree)
-        return super().__init__(self.root, tree_string, branching_degree=self.branching_degree)
+        tree_string = Tp.add_closing_brackets(normal_string, self.branching_degree)
+        return super()._initialize_with_string_rek(tree_string)

@@ -6,14 +6,14 @@ from tree import Node
 from Constants import translate_from_dna, translate_to_dna
 
 
-class LogarithmicEncoding(TriTree):
+class ImprovedBracketEncoding(TriTree):
     def __init__(self, root, initial_value=None, dna_value=None, branching_degree=3):
+        self.version = "bracket_improved"
         self.branching_degree = branching_degree
-        self.version = "log"
+        self.names = []
         if initial_value:
             super().__init__(root, initial_value, branching_degree=branching_degree)
         elif dna_value:
-            self.names = []
             self.root = self.tree_from_dna(dna_value)
         elif root:
             super().__init__(root)
@@ -43,4 +43,3 @@ class LogarithmicEncoding(TriTree):
         normal_string = translate_from_dna(string, self.version)
         tree_string = Tp.add_closing_brackets(normal_string, self.branching_degree)
         return super()._initialize_with_string_rek(tree_string)
-    
