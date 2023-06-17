@@ -1,5 +1,5 @@
-from treeParser import get_subtree_strings
-import CustomExceptions
+from helperFunctions.treeParser import get_subtree_strings
+from helperFunctions import CustomExceptions
 
 
 class Node:

@@ -1,12 +1,12 @@
-from tree import TriTree
-import math
-from itertools import product
-import treeParser as Tp
-from tree import Node
-from logarithmicEncoding import LogarithmicEncoding
-from bracketEncoding import BracketEncoding
-from improvedBracketEncoding import ImprovedBracketEncoding
-from Constants import translate_to_dna, translate_from_dna
+from encodings.tree import TriTree
+from encodings.tree import Node
+from encodings.specialEncodings.logarithmicEncoding import LogarithmicEncoding
+from encodings.specialEncodings.bracketEncoding import BracketEncoding
+from encodings.specialEncodings.improvedBracketEncoding import ImprovedBracketEncoding
+from helperFunctions.AlphabetFunctions import translate_from_dna, initialize_alphabet
+
+
+initialize_alphabet(["A", "C", "T", "G"])
 
 tree = TriTree(Node("node1", 4), branching_degree=4)
 tree.add_node("node1", ["node2", "node3", "node4", "node8"])

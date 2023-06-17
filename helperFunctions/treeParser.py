@@ -1,5 +1,5 @@
-# splits normal string into 3 subtree strings
 def get_subtree_strings(string, degree):
+    # splits normal string into 3 subtree strings
     index = 0
     return_list = []
 

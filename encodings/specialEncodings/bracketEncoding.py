@@ -1,14 +1,11 @@
-from tree import TriTree
-import math
-from itertools import product
-import treeParser as Tp
-from tree import Node
-from Constants import translate_from_dna, translate_to_dna
+from encodings.tree import TriTree
+from helperFunctions import treeParser as Tp
+from helperFunctions.AlphabetFunctions import translate_from_dna, translate_to_dna
 
 
-class ImprovedBracketEncoding(TriTree):
+class BracketEncoding(TriTree):
     def __init__(self, root, initial_value=None, dna_value=None, branching_degree=3):
-        self.version = "bracket_improved"
+        self.version = "bracket"
         self.branching_degree = branching_degree
         self.names = []
         if initial_value:
