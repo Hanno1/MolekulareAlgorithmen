@@ -14,11 +14,13 @@ def generator(length, symbols):
 
 
 class LogarithmicEncoding(TriTree):
-    def __init__(self, root, initial_value=None, dna_value=None, bracket=None, symbols=Constants.BASE_SYMBOLS):
+    def __init__(self, root, initial_value=None, dna_value=None, bracket=None, symbols=Constants.BASE_SYMBOLS,
+                 branching_degree=3):
         self.mapping = dict()
         self.symbols = symbols
+        self.branching_degree = branching_degree
         if initial_value:
-            super().__init__(root, initial_value)
+            super().__init__(root, initial_value, branching_degree=branching_degree)
         elif dna_value and bracket:
             self.names = []
             self.root = self.decode_tree(dna_value, bracket)
@@ -42,7 +44,7 @@ class LogarithmicEncoding(TriTree):
         return_string = self.mapping[node.name]
 
         # check if node has subtree
-        if len(node.children) == 3: 
+        if len(node.children) == self.branching_degree:
             # append dna-string with open bracket
             return_string += self.mapping["("]
             # append dna-string with subtree-string
@@ -54,17 +56,21 @@ class LogarithmicEncoding(TriTree):
     def decode_tree(self, string, bracket_code):
         if len(string) > len(bracket_code):
             # get root
-            node = Node(string[:len(bracket_code)])
+            node = Node(string[:len(bracket_code)], self.branching_degree)
             # get subtrees of root
             split_string = string[2*len(bracket_code):]
-            s1, s2, s3 = Tp.get_substring_logarithmic_encoding(split_string, bracket_code)
-            n1 = self.decode_tree(s1, bracket_code)
+            arr = Tp.get_substring_logarithmic_encoding(split_string, bracket_code, self.branching_degree)
+            node_list = []
+            for n in arr:
+                node_list.append(self.decode_tree(n, bracket_code))
+            """n1 = self.decode_tree(s1, bracket_code)
             n2 = self.decode_tree(s2, bracket_code)
-            n3 = self.decode_tree(s3, bracket_code)
+            n3 = self.decode_tree(s3, bracket_code)"""
             # add subtrees to root
-            node.add_children([n1, n2, n3])
+            # node.add_children([n1, n2, n3])
+            node.add_children(node_list)
         else:
-            node = Node(string)
+            node = Node(string, self.branching_degree)
             self.names.append(node.name)
         return node
 

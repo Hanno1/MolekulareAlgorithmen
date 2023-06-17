@@ -1,11 +1,19 @@
 # splits normal string into 3 subtree strings
-def get_subtree_strings(string):
+def get_subtree_strings(string, degree):
     index = 0
-    substring_1, index = subtree_string(string, index)
-    substring_2, index = subtree_string(string, index)
-    substring_3, _ = subtree_string(string, index)
+    return_list = []
 
-    return substring_1, substring_2, substring_3[:-1]
+    for d in range(degree):
+        substring, index = subtree_string(string, index)
+        if len(substring) == 0:
+            break
+        return_list.append(substring)
+    """substring_1, index = subtree_string(string, index)
+    substring_2, index = subtree_string(string, index)
+    substring_3, _ = subtree_string(string, index)"""
+    last = return_list[-1]
+    return_list[-1] = last[:-1]
+    return return_list
 
 
 def subtree_string(string, index):
@@ -25,16 +33,22 @@ def subtree_string(string, index):
 
 
 # splits dna string into 3 subtree strings
-def get_substring_logarithmic_encoding(string, bracket):
+def get_substring_logarithmic_encoding(string, bracket, degree):
     index = 0
-    substring_1, index = subtree_string_logarithmic_encoding(string, index, bracket)
+    return_list = []
+    for d in range(degree):
+        substring, index = subtree_string_logarithmic_encoding(string, index, bracket, degree)
+        if len(substring) == 0:
+            break
+        return_list.append(substring)
+    """substring_1, index = subtree_string_logarithmic_encoding(string, index, bracket)
     substring_2, index = subtree_string_logarithmic_encoding(string, index, bracket)
-    substring_3, _ = subtree_string_logarithmic_encoding(string, index, bracket)
+    substring_3, _ = subtree_string_logarithmic_encoding(string, index, bracket)"""
 
-    return substring_1, substring_2, substring_3
+    return return_list
 
 
-def subtree_string_logarithmic_encoding(string, index, bracket):
+def subtree_string_logarithmic_encoding(string, index, bracket, degree):
     head = ""
     sub_string = ""
     open_brackets = 0
@@ -62,7 +76,7 @@ def subtree_string_logarithmic_encoding(string, index, bracket):
 
             sub_string += sequence
             # break if subtree-end is found
-            if 3 * open_brackets == num_passed_nodes: 
+            if degree * open_brackets == num_passed_nodes:
                 break
     
     sub_string = head+sub_string
