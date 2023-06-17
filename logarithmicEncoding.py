@@ -63,11 +63,7 @@ class LogarithmicEncoding(TriTree):
             node_list = []
             for n in arr:
                 node_list.append(self.decode_tree(n, bracket_code))
-            """n1 = self.decode_tree(s1, bracket_code)
-            n2 = self.decode_tree(s2, bracket_code)
-            n3 = self.decode_tree(s3, bracket_code)"""
             # add subtrees to root
-            # node.add_children([n1, n2, n3])
             node.add_children(node_list)
         else:
             node = Node(string, self.branching_degree)

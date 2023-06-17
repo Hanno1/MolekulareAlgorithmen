@@ -8,9 +8,6 @@ def get_subtree_strings(string, degree):
         if len(substring) == 0:
             break
         return_list.append(substring)
-    """substring_1, index = subtree_string(string, index)
-    substring_2, index = subtree_string(string, index)
-    substring_3, _ = subtree_string(string, index)"""
     last = return_list[-1]
     return_list[-1] = last[:-1]
     return return_list
@@ -41,10 +38,6 @@ def get_substring_logarithmic_encoding(string, bracket, degree):
         if len(substring) == 0:
             break
         return_list.append(substring)
-    """substring_1, index = subtree_string_logarithmic_encoding(string, index, bracket)
-    substring_2, index = subtree_string_logarithmic_encoding(string, index, bracket)
-    substring_3, _ = subtree_string_logarithmic_encoding(string, index, bracket)"""
-
     return return_list
 
 
