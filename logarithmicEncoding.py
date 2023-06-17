@@ -23,11 +23,11 @@ class LogarithmicEncoding(TriTree):
             super().__init__(root, initial_value, branching_degree=branching_degree)
         elif dna_value and bracket:
             self.names = []
-            self.root = self.decode_tree(dna_value, bracket)
+            self.root = self.tree_from_dna(dna_value, bracket)
         elif root:
             super().__init__(root)
 
-    def encode_tree(self):
+    def tree_to_dna(self):
         # +1 for bracket terminal
         terminal_counter = len(self.names) + 1
         word_length = math.ceil(math.log(terminal_counter, len(self.symbols)))
@@ -36,9 +36,9 @@ class LogarithmicEncoding(TriTree):
         # use first encoding as bracket encoding
         self.mapping["("] = next(g)
         
-        return self._encode_tree_rek(self.root, g)
+        return self._tree_to_dna_rek(self.root, g)
 
-    def _encode_tree_rek(self, node, g):
+    def _tree_to_dna_rek(self, node, g):
         # append dna-string with node-name
         self.mapping[node.name] = next(g)
         return_string = self.mapping[node.name]
@@ -49,11 +49,11 @@ class LogarithmicEncoding(TriTree):
             return_string += self.mapping["("]
             # append dna-string with subtree-string
             for child in node.children:
-                ret_string = self._encode_tree_rek(child, g)
+                ret_string = self._tree_to_dna_rek(child, g)
                 return_string += ret_string
         return return_string
 
-    def decode_tree(self, string, bracket_code):
+    def tree_from_dna(self, string, bracket_code):
         if len(string) > len(bracket_code):
             # get root
             node = Node(string[:len(bracket_code)], self.branching_degree)
@@ -62,7 +62,7 @@ class LogarithmicEncoding(TriTree):
             arr = Tp.get_substring_logarithmic_encoding(split_string, bracket_code, self.branching_degree)
             node_list = []
             for n in arr:
-                node_list.append(self.decode_tree(n, bracket_code))
+                node_list.append(self.tree_from_dna(n, bracket_code))
             # add subtrees to root
             node.add_children(node_list)
         else:
