@@ -20,6 +20,13 @@ def initialize_alphabet(symbols):
         for i in range(len(arr)):
             yield arr[i]
 
+    def generator2(s, s_prime, l):
+        # generator for unique words of given length
+        arr = ["".join(i) for i in product(s, repeat=l)]
+        for i in range(len(arr)):
+            if arr[0] not in s_prime:
+                yield arr[i]
+
     # chars we need in the alphabet
     all_chars = [",", "("]
     for s in string.ascii_lowercase:
@@ -69,13 +76,29 @@ def initialize_alphabet(symbols):
     INVERSE_ALPHABET_BRACKET_IMPROVED[symbols[-1]] = ","
     INVERSE_ALPHABET_BRACKET_IMPROVED[symbols[-1] + symbols[-1]] = "("
 
-    length = math.ceil(math.log(len(all_chars), len(symbols)))
-    g = generator(symbols, length)
+    length = 1 + math.ceil(math.log(len(all_chars) / (len(symbols) - 1), len(symbols)))
+    g = generator2(symbols, symbols[:-1], length)
 
     for symbol in all_chars:
         c = next(g)
         ALPHABET_BRACKET_IMPROVED[symbol] = c
         INVERSE_ALPHABET_BRACKET_IMPROVED[c] = symbol
+
+    ALPHABET_BRACKET_IMPROVED2 = dict()
+    INVERSE_ALPHABET_BRACKET_IMPROVED2 = dict()
+
+    ALPHABET_BRACKET_IMPROVED2["("] = symbols[-1]
+    ALPHABET_BRACKET_IMPROVED2[","] = symbols[-2]
+    INVERSE_ALPHABET_BRACKET_IMPROVED2[symbols[-1]] = "("
+    INVERSE_ALPHABET_BRACKET_IMPROVED2[symbols[-2]] = ","
+
+    length = 1 + math.ceil(math.log(len(all_chars) / (len(symbols) - 2), len(symbols)))
+    g = generator2(symbols, symbols[:-2], length)
+
+    for symbol in all_chars:
+        c = next(g)
+        ALPHABET_BRACKET_IMPROVED2[symbol] = c
+        INVERSE_ALPHABET_BRACKET_IMPROVED2[c] = symbol
 
     # save alphabet to constants
     with open("Constants.py", "w") as file:
@@ -86,7 +109,10 @@ def initialize_alphabet(symbols):
         file.write("INVERSE_ALPHABET_BRACKET = " + INVERSE_ALPHABET_BRACKET.__str__() + "\n\n")
 
         file.write("ALPHABET_BRACKET_IMPROVED = " + ALPHABET_BRACKET_IMPROVED.__str__() + "\n")
-        file.write("INVERSE_ALPHABET_BRACKET_IMPROVED = " + INVERSE_ALPHABET_BRACKET_IMPROVED.__str__() + "\n")
+        file.write("INVERSE_ALPHABET_BRACKET_IMPROVED = " + INVERSE_ALPHABET_BRACKET_IMPROVED.__str__() + "\n\n")
+
+        file.write("ALPHABET_BRACKET_IMPROVED2 = " + ALPHABET_BRACKET_IMPROVED2.__str__() + "\n")
+        file.write("INVERSE_ALPHABET_BRACKET_IMPROVED2 = " + INVERSE_ALPHABET_BRACKET_IMPROVED2.__str__() + "\n")
 
         file.close()
 
