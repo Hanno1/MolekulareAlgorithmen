@@ -130,6 +130,8 @@ def get_alphabet(version):
         return C.ALPHABET_BRACKET, C.INVERSE_ALPHABET_BRACKET
     elif version == "bracket_improved":
         return C.ALPHABET_BRACKET_IMPROVED, C.INVERSE_ALPHABET_BRACKET_IMPROVED
+    elif version == "bracket_improved2":
+        return C.ALPHABET_BRACKET_IMPROVED2, C.INVERSE_ALPHABET_BRACKET_IMPROVED2
     print("Unknown Alphabet. Version has to be log, bracket or bracket_improved")
     raise ValueError
 
@@ -180,6 +182,24 @@ def translate_from_dna(dna, version):
                 else:
                     split_dna.append(comma)
                     index += 1
+            else:
+                split_dna.append(dna[index:index+length])
+                index += length
+    elif version == "bracket_improved2":
+        length = len(ALP["a"])
+        split_dna = []
+        comma = ALP[","]
+        bracket = ALP["("]
+        index = 0
+        while index < len(dna):
+            char = dna[index]
+            # search for comma, if found there might be a bracket instead, so check for it
+            if char == comma:
+                split_dna.append(comma)
+                index += 1
+            elif char == bracket:
+                split_dna.append(bracket)
+                index += 1                    
             else:
                 split_dna.append(dna[index:index+length])
                 index += length
