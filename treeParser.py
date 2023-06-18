@@ -1,4 +1,13 @@
 def get_subtree_strings(string, degree):
+    """
+    gets a string and splits it into substrings depending of the graph degree. Will be 3 normally.
+    For Example the input might be "a(b,c,d),e,f(1,2,3)" the the function will split this into
+    "a(b,c,d)", "e" and "f(1,2,3)"
+
+    :param string: input string to split - first char will not be a bracket
+    :param degree: degree of the tree. 3
+    :return: list of substrings
+    """
     # splits normal string into 3 subtree strings
     index = 0
     return_list = []
@@ -14,6 +23,14 @@ def get_subtree_strings(string, degree):
 
 
 def subtree_string(string, index):
+    """
+    gets string and searches for closing bracket on the same level
+
+    :param string: substring to handle
+    :param index: index from there to start the search
+    :return: substring there a bracket opens and a bracket closes on the same level.
+             index there we are in the main string
+    """
     sub_string = ""
     open_brackets = 0
     # iterate through string from index
@@ -30,6 +47,14 @@ def subtree_string(string, index):
 
 
 def add_closing_brackets(string, degree):
+    """
+    gets string without closing brackets and adds the brackets. Computes the position of the brackets
+    by counting commas on levels using a stack (comma_counter_stack)
+
+    :param string: string without closing brackets
+    :param degree: degree of the tree
+    :return: string with closing brackets
+    """
     return_string = ""
     split_string = string.split("(", 1)
     if len(split_string) == 1:
@@ -50,7 +75,3 @@ def add_closing_brackets(string, degree):
     for _ in comma_counter_stack:
         return_string += ")"
     return return_string
-
-
-
-

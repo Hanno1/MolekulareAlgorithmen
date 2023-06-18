@@ -4,6 +4,11 @@ from AlphabetFunctions import translate_from_dna, translate_to_dna
 
 
 class ImprovedBracketEncoding(TriTree):
+    """
+    improved bracket encoding using improved bracket Alphabet
+    the same as Bracket Encoding, but uses different alphabet
+    for comments see bracket encoding
+    """
     def __init__(self, root, initial_value=None, dna_value=None, branching_degree=3):
         self.version = "bracket_improved"
         self.branching_degree = branching_degree
