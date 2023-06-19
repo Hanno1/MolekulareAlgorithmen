@@ -14,6 +14,8 @@ tree_string = tree.get_tree_string()
 print("\nRegular trinary tree initalized with root node and by adding children:",tree.get_tree_string())
 tree = TriTree(initial_value=tree_string, branching_degree=3)
 print("Regular trinary tree initalized with tree string:",tree.get_tree_string())
+tree.initialize_with_string("a1(b2(h8,i9,j10(k11,l12,m13)),c3,d4(e5,f6,g7))")
+print("Regular trinary tree initalized with tree string:",tree.get_tree_string())
 
 # We also support n-ary trees
 tree = TriTree(initial_value="a(b,c(f,g,h,i),d,e)", branching_degree=4)
@@ -24,10 +26,8 @@ tree_string = "a1(b2(h8,i9,j10(k11,l12,m13)),c3,d4(e5,f6,g7))"
 print(f"Testing all DNA-Encoding Algorithms using the tree {tree_string}:")
 for version in ["log", "bracket", "bracket_improved", "bracket_improved2"]:
     print(f"\tTesting the {version} algorithm:")
-    tree = DNA_Encoder(None, version=version, initial_value=tree_string)
+    tree = DNA_Encoder(version=version, initial_value=tree_string)
     enc = tree.tree_to_dna()
     print(f"\t\tDNA-encoded tree: {enc}")
-    tree = DNA_Encoder(None, version=version, dna_value=enc)
+    tree = DNA_Encoder(version=version, dna_value=enc)
     print(f"\t\tDNA-decoded tree: {tree.get_tree_string()}")
-
-

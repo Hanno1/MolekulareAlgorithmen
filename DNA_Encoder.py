@@ -15,7 +15,7 @@ class DNA_Encoder(TriTree):
         :param dna_value: tree can be initialized by the user given a dna encoding - decodes into tree structure
         :param branching_degree: branching degree of the tree - normally 3
         """
-        if not version and not version in ["log", "bracket", "bracket_improved", "bracket_improved2"]:
+        if not version or not version in ["log", "bracket", "bracket_improved", "bracket_improved2"]:
             print("Version has to be either log, bracket, bracket_improved or bracket_improved2")
             raise ValueError
         self.branching_degree = branching_degree
@@ -65,7 +65,7 @@ class DNA_Encoder(TriTree):
         translate Function from AlphabetFunctions.
         This string does not contain closing brackets, so add them using the treeParser method
 
-        :param string: string to decode into tree structure
+        :param string: dna encoded string to decode
         :return: tree string
         """
         normal_string = translate_from_dna(string, self.version)
@@ -78,10 +78,10 @@ class DNA_Encoder(TriTree):
         translate Function from AlphabetFunctions
         This string does not contain closing brackets, so add them using the treeParser method
 
-        :param string: string to decode into tree structure
+        :param string: dna encoded string to decode
         :return: root node
         """
         normal_string = translate_from_dna(string, self.version)
         tree_string = Tp.add_closing_brackets(normal_string, self.branching_degree)
-        return super()._initialize_with_string_rek(tree_string)
+        return super().initialize_with_string(tree_string)
     

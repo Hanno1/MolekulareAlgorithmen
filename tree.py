@@ -38,7 +38,7 @@ class TriTree:
         self.names = []
         self.branching_degree = branching_degree
         if initial_value: 
-            self.root = self._initialize_with_string_rek(initial_value)
+            self.initialize_with_string(initial_value)
         elif root:
             self.root = root
             self.names.append(self.root.name)
@@ -46,9 +46,17 @@ class TriTree:
             print("Could not initialize tree. Please initialize with root node or a tree string.")
             raise ValueError
         
+    def initialize_with_string(self, string):
+        """
+        function to initialize the graph using a string given by the user
+        :return: root node
+        """
+        self.root = self._initialize_with_string_rek(string)
+
     def _initialize_with_string_rek(self, string):
         """
-        initialize the graph using a string given by the user
+        recursive helper function to initialize the graph using a string given by the user
+        works by finding subtrees 
         :return: node
         """
         # if the string contains a bracket we have to disassemble once more
@@ -67,6 +75,7 @@ class TriTree:
             node = Node(string, self.branching_degree)
             self.names.append(node.name)
         return node
+    
 
     def add_node(self, node_name, children):
         """
