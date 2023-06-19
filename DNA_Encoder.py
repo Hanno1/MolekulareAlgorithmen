@@ -58,6 +58,20 @@ class DNA_Encoder(TriTree):
                     return_string += translate_to_dna(",", self.version)
         return return_string
 
+
+    def tree_string_from_dna(self, string):
+        """
+        translate dna string into tree string. First translate the string back to normal using
+        translate Function from AlphabetFunctions.
+        This string does not contain closing brackets, so add them using the treeParser method
+
+        :param string: string to decode into tree structure
+        :return: tree string
+        """
+        normal_string = translate_from_dna(string, self.version)
+        return Tp.add_closing_brackets(normal_string, self.branching_degree)
+        
+
     def tree_from_dna(self, string):
         """
         translate dna string into tree structure. First translate the string back to normal using
