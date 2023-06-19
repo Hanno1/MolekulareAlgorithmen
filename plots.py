@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import math
 
 names = ["trivial encoding", "bracket encoding", "improved bracket encoding", "improved bracket encoding 2"]
 
@@ -54,3 +55,47 @@ def plot_2(scaling):
 
 # plot_2(1)
 # plot_2(5)
+
+
+# Differing amount of real language symbols
+
+def trivial(s, d, m, k):
+    n = math.ceil(math.log(s,4))
+    return n*m + n*(2*(k-1)/d) + n*((k-1)/d)
+
+def bracket(s, d, m, k):
+    s -= 2
+    n = math.ceil(math.log(s,3))
+    return n*m + (2*(k-1)/d) + 2*((k-1)/d)
+
+def improved_bracket(s, d, m, k):
+    s -= 2
+    n = math.ceil(math.log(s/3,4)) + 1
+    return n*m + (2*(k-1)/d) + 2*((k-1)/d)
+
+def improved_bracket2(s, d, m, k):
+    s -= 2
+    n = math.ceil(math.log(s/2,4)) + 1
+    return n*m + (2*(k-1)/d) + ((k-1)/d)
+
+functions = [trivial, bracket, improved_bracket, improved_bracket2]
+# functions = [improved_bracket, improved_bracket2]
+# names = ["improved bracket encoding", "improved bracket encoding 2"]
+
+x = 500
+def plot_2(scaling):
+    num_sybols_to_encode = [x for x in range(5,100)]
+    for function in functions:
+        y_values = []
+        for s in num_sybols_to_encode:
+            y_values.append(function(s=s, d=3, m=scaling * x, k=x))
+        plt.plot(num_sybols_to_encode, y_values)
+    plt.legend(names, fontsize=12)
+    plt.xlabel("Größe des Zeichensatzes")
+    plt.ylabel("verbrauchter Speicherplatz")
+
+    plt.show()
+
+plot_2(1)
+plot_2(5)
+
