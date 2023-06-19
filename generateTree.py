@@ -20,7 +20,7 @@ def generate_node_names():
         length += 1
 
 
-def generate_tree(node_count, degree, mode="b"):
+def generate_tree(node_count, degree=3, mode="b"):
     """
     generate tree and returns string for the tree
 
@@ -34,11 +34,11 @@ def generate_tree(node_count, degree, mode="b"):
     root = Node(next(g), degree)
     t = TriTree(root, branching_degree=degree)
 
-    generate_it(t, g, node_count, 1, degree, [root], mode)
+    _generate_it(t, g, node_count, 1, degree, [root], mode)
     return t.get_tree_string()
 
 
-def generate_it(tree, gen, node_count, current_node_count, degree, current_nodes, mode):
+def _generate_it(tree, gen, node_count, current_node_count, degree, current_nodes, mode):
     """
     iterative Function to create the actual tree from initial tree tree
 

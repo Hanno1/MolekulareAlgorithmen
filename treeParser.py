@@ -66,11 +66,10 @@ def add_closing_brackets(string, degree):
         if char == "(":
             comma_counter_stack.append(0)
         if char == ",":
-            comma_counter_stack[-1] = comma_counter_stack[-1] + 1
-            if comma_counter_stack[-1] == degree:
+            while comma_counter_stack[-1] == degree-1:
                 return_string += ")"
                 comma_counter_stack = comma_counter_stack[:-1]
-                comma_counter_stack[-1] = comma_counter_stack[-1] + 1
+            comma_counter_stack[-1] = comma_counter_stack[-1] + 1
         return_string += char
     for _ in comma_counter_stack:
         return_string += ")"

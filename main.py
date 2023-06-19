@@ -1,22 +1,33 @@
 from tree import TriTree
 from tree import Node
 from DNA_Encoder import DNA_Encoder
-from AlphabetFunctions import translate_from_dna, initialize_alphabet
+from AlphabetFunctions import initialize_alphabet
 
-
+# Using this function, we save all alphabets for different modes in the Constants file
 initialize_alphabet(["A", "C", "T", "G"])
 
-tree = TriTree(Node("node1", 4), branching_degree=4)
-tree.add_node("node1", ["node2", "node3", "node4", "node8"])
-tree.add_node("node3", ["node5", "node6", "node7", "node9"])
+# Testing the regular trinary tree
+tree = TriTree(Node("a", degree=3), branching_degree=3)
+tree.add_node("a", ["b", "c", "d"])
+tree.add_node("c", ["e", "f", "g"])
+tree_string = tree.get_tree_string()
+print("\nRegular trinary tree initalized with root node and by adding children:",tree.get_tree_string())
+tree = TriTree(initial_value=tree_string, branching_degree=3)
+print("Regular trinary tree initalized with tree string:",tree.get_tree_string())
 
-print(tree.get_tree_string())
+# We also support n-ary trees
+tree = TriTree(initial_value="a(b,c(f,g,h,i),d,e)", branching_degree=4)
+print("4-nary tree initalized with tree string:",tree.get_tree_string(),"\n")
 
+# Testing all DNA Encodings and Decodings
+tree_string = "a1(b2(h8,i9,j10(k11,l12,m13)),c3,d4(e5,f6,g7))"
+print(f"Testing all DNA-Encoding Algorithms using the tree {tree_string}:")
 for version in ["log", "bracket", "bracket_improved", "bracket_improved2"]:
-    bracket_tree = DNA_Encoder(None, version=version, initial_value="a(be,c(fg(4,13,4a),h(i,j,k),e),d(1,2,412))")
-    print(bracket_tree.get_tree_string())
-    enc = bracket_tree.tree_to_dna()
-    print(enc)
-    print(translate_from_dna(enc, version))
-    new_bracket = DNA_Encoder(None, version=version, dna_value=enc)
-    print(new_bracket.get_tree_string())
+    print(f"\tTesting the {version} algorithm:")
+    tree = DNA_Encoder(None, version=version, initial_value=tree_string)
+    enc = tree.tree_to_dna()
+    print(f"\t\tDNA-encoded tree: {enc}")
+    tree = DNA_Encoder(None, version=version, dna_value=enc)
+    print(f"\t\tDNA-decoded tree: {tree.get_tree_string()}")
+
+

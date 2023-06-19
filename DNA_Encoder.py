@@ -7,7 +7,7 @@ class DNA_Encoder(TriTree):
     """
     trivial encoding using the logarithmic alphabet
     """
-    def __init__(self, root, version, initial_value=None, dna_value=None, branching_degree=3):
+    def __init__(self, version, root=None, initial_value=None, dna_value=None, branching_degree=3):
         """
         :param root: root of the tree
         :param version: version of the dna encoding used - either log, bracket or bracket_improved
@@ -22,11 +22,14 @@ class DNA_Encoder(TriTree):
         self.version = version
         self.names = []
         if initial_value:
-            super().__init__(root, initial_value, branching_degree=branching_degree)
+            super().__init__(initial_value=initial_value, branching_degree=branching_degree)
         elif dna_value:
             self.root = self.tree_from_dna(dna_value)
         elif root:
-            super().__init__(root)
+            super().__init__(root=root)
+        else:
+            print("Could not initialize tree. Please initialize with root node or a tree string.")
+            raise ValueError
 
     def tree_to_dna(self):
         return self._tree_to_dna_rek(self.root)

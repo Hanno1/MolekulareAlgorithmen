@@ -4,7 +4,7 @@ import CustomExceptions
 
 class Node:
     """
-    Node datastructure. used by all tree algorithms
+    Node datastructure. used by all algorithms
     """
     def __init__(self, name, degree):
         """
@@ -28,7 +28,7 @@ class TriTree:
     """
     normal tree structure used by all main algorithms
     """
-    def __init__(self, root, initial_value=None, branching_degree=3):
+    def __init__(self, root=None, initial_value=None, branching_degree=3):
         """
         :param root: root node of the tree
         :param initial_value: if this is not none, we will initialize the tree using a string like a(b,c,d(1,23,4))
@@ -37,11 +37,14 @@ class TriTree:
         # self.names will save all names contained in the tree and raise an error then there are duplicates
         self.names = []
         self.branching_degree = branching_degree
-        if initial_value:
+        if initial_value: 
             self.root = self._initialize_with_string_rek(initial_value)
-        else:
+        elif root:
             self.root = root
             self.names.append(self.root.name)
+        else:
+            print("Could not initialize tree. Please initialize with root node or a tree string.")
+            raise ValueError
         
     def _initialize_with_string_rek(self, string):
         """
