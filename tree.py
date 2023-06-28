@@ -6,6 +6,7 @@ class Node:
     """
     Node datastructure. used by all algorithms
     """
+
     def __init__(self, name, degree):
         """
         :param name: name of the node. will be unique
@@ -28,6 +29,7 @@ class TriTree:
     """
     normal tree structure used by all main algorithms
     """
+
     def __init__(self, root=None, initial_value=None, branching_degree=3):
         """
         :param root: root node of the tree
@@ -37,7 +39,7 @@ class TriTree:
         # self.names will save all names contained in the tree and raise an error then there are duplicates
         self.names = []
         self.branching_degree = branching_degree
-        if initial_value: 
+        if initial_value:
             self.initialize_with_string(initial_value)
         elif root:
             self.root = root
@@ -45,7 +47,7 @@ class TriTree:
         else:
             print("Could not initialize tree. Please initialize with root node or a tree string.")
             raise ValueError
-        
+
     def initialize_with_string(self, string):
         """
         function to initialize the graph using a string given by the user
@@ -75,7 +77,6 @@ class TriTree:
             node = Node(string, self.branching_degree)
             self.names.append(node.name)
         return node
-    
 
     def add_node(self, node_name, children):
         """
@@ -98,7 +99,7 @@ class TriTree:
         for child in children:
             c.append(Node(child, self.branching_degree))
             self.names.append(child)
-        node.add_children(c)        
+        node.add_children(c)
 
     def search_node(self, name):
         # search node recursive using inorder tree traverse

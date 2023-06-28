@@ -7,10 +7,11 @@ class DNA_Encoder(TriTree):
     """
     trivial encoding using the logarithmic alphabet
     """
+
     def __init__(self, version, root=None, initial_value=None, dna_value=None, branching_degree=3):
         """
         :param root: root of the tree
-        :param version: version of the dna encoding used - either log, bracket or bracket_improved
+        :param version: version of the dna encoding used - either log, bracket, bracket_improved or bracket_improved2
         :param initial_value: tree can be initialized by the user given a string like a(b,c(d,e,f),32)
         :param dna_value: tree can be initialized by the user given a dna encoding - decodes into tree structure
         :param branching_degree: branching degree of the tree - normally 3
@@ -24,7 +25,7 @@ class DNA_Encoder(TriTree):
         if initial_value:
             super().__init__(initial_value=initial_value, branching_degree=branching_degree)
         elif dna_value:
-            self.root = self.tree_from_dna(dna_value)
+            self.tree_from_dna(dna_value)
         elif root:
             super().__init__(root=root)
         else:
@@ -58,7 +59,6 @@ class DNA_Encoder(TriTree):
                     return_string += translate_to_dna(",", self.version)
         return return_string
 
-
     def tree_string_from_dna(self, string):
         """
         translate dna string into tree string. First translate the string back to normal using
@@ -70,7 +70,6 @@ class DNA_Encoder(TriTree):
         """
         normal_string = translate_from_dna(string, self.version)
         return Tp.add_closing_brackets(normal_string, self.branching_degree)
-        
 
     def tree_from_dna(self, string):
         """
@@ -83,5 +82,4 @@ class DNA_Encoder(TriTree):
         """
         normal_string = translate_from_dna(string, self.version)
         tree_string = Tp.add_closing_brackets(normal_string, self.branching_degree)
-        return super().initialize_with_string(tree_string)
-    
+        super().initialize_with_string(tree_string)
